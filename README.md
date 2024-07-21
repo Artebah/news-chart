@@ -1,46 +1,59 @@
-# Getting Started with Create React App
+# Логіка підрахунку постів
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+```javascript
+let initDates = [];
+let currentDate = startDate;
+let i = binaryFoundIndex;
 
-## Available Scripts
+**Підрахунок існуючої властивості**
+if (timestamp in initDates) {
+    initDates[timestamp] = initDates[timestamp] + 1;
+    i++;
+} else {
+    **Перевірка поточної дати, яка повинна бути. Починаючи з currentDate = startDate**
+    if (timestamp === currentDate) {
+        initDates[timestamp] = 1;
+        currentDate += 1000;
+        i++;
+    } else {
+        **Додати 0 count**
+        initDates[currentDate] = 0;
+        currentDate += 1000;
+    }
+}
 
-In the project directory, you can run:
+currentDate = 20.07.2024 10:04:07
+timestamp = 20.07.2024 10:04:07
 
-### `yarn start`
+## Input timestamps
+20.07.2024 10:04:00
+20.07.2024 10:04:01
+...
+20.07.2024 10:04:03
+20.07.2024 10:04:03
+20.07.2024 10:04:04
+20.07.2024 10:04:05
+20.07.2024 10:04:05
+20.07.2024 10:04:05
+20.07.2024 10:04:06
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Output data
+{
+    "20.07.2024 10:04:00": 1,
+    "20.07.2024 10:04:01": 1,
+    "20.07.2024 10:04:02": 0,
+    "20.07.2024 10:04:03": 2,
+    "20.07.2024 10:04:04": 1,
+    "20.07.2024 10:04:05": 3,
+    "20.07.2024 10:04:06": 1
+}
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-### `yarn test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `yarn build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+##Todo:
+- [x] Придумати логіку для підрахунку постів
+- [x] Додати фільтр точності
+- [x] Додати часовий діапазон
+- [x] Додати пагінацію
+- [ ] Додати внизу джерела, з яких взято інфу
+- [ ] Додати бокове меню для перегляду інфо-плаформ
+- [ ] Додати фільтр по ключ. слову/запиту
+```
