@@ -30,9 +30,15 @@ ChartJS.register(
 
 interface NewsChartProps {
   resources: Resource[];
+  requestFilters: any;
+  setRequestFilters: any;
 }
 
-const NewsChart: React.FC<NewsChartProps> = ({ resources }) => {
+const NewsChart: React.FC<NewsChartProps> = ({
+  resources,
+  requestFilters,
+  setRequestFilters,
+}) => {
   const [startDate, setStartDate] = React.useState(formatDate(START_DATE));
   const [endDate, setEndDate] = React.useState(formatDate(new Date()));
   const [filterByTime, setFilterByTime] = React.useState<TimeFilterValues>("seconds");
@@ -45,7 +51,12 @@ const NewsChart: React.FC<NewsChartProps> = ({ resources }) => {
         endDate: { setDate: setEndDate, value: endDate },
         chartStartDate: { setDate: setChartStartDate, value: chartStartDate },
       }}>
-      <TopBar filterByTime={filterByTime} setFilterByTime={setFilterByTime} />
+      <TopBar
+        requestFilters={requestFilters}
+        setRequestFilters={setRequestFilters}
+        filterByTime={filterByTime}
+        setFilterByTime={setFilterByTime}
+      />
       <CustomLine {...generateData(resources, filterByTime, chartStartDate)} />
     </DateProvider>
   );

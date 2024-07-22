@@ -19,6 +19,7 @@ function generateData(
 
   function fillNextTenSeconds(dates: string[]) {
     const timestamps = dates.map((date) => dateToTimestamp(date, filterByTime));
+    timestamps.sort((a, b) => a - b);
 
     const initDates: InitDates = {};
     const startTime = dateToTimestamp(startDateStr, filterByTime);

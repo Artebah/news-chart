@@ -112,7 +112,11 @@ h1 {
   margin: 60px 0 30px;
   display: flex;
   justify-content: space-between;
-  align-items: end;
+}
+.actions-right {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
 }
 
 .info-bar {
@@ -137,4 +141,14 @@ h1 {
 .info-bar-post-top {
   display: flex;
   gap: 5px;
+}
+.requests-filter {
+  display: flex;
+  max-width: 400px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.requests-filter-button.notActive {
+  text-decoration: line-through;
+  opacity: 0.5;
 }

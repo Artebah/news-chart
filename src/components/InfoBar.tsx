@@ -20,7 +20,7 @@ const InfoBar: React.FC<InfoBarProps> = ({ resources }) => {
       {posts.length && (
         <ul className="info-bar-posts">
           {posts.map((post, i) => (
-            <li key={post.messageID + i}>
+            <li key={post.messageID + "" + i}>
               <span className="info-bar-post-top">
                 <span>{i + 1}.</span>
                 <p>{post.text}</p>
