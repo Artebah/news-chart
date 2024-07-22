@@ -11,7 +11,9 @@ const InfoBar: React.FC<InfoBarProps> = ({ resources }) => {
   const [posts, setPosts] = React.useState<Post[]>([]);
 
   React.useEffect(() => {
-    setPosts(getPosts(resources));
+    const newPosts = getPosts(resources);
+
+    setPosts(newPosts);
   }, [resources]);
 
   return (
@@ -22,13 +24,12 @@ const InfoBar: React.FC<InfoBarProps> = ({ resources }) => {
           {posts.map((post, i) => (
             <li key={post.messageID + "" + i}>
               <span className="info-bar-post-top">
-                <span>{i + 1}.</span>
-                <p>{post.text}</p>
+                {i + 1}. {post.text}
               </span>
+              <p>{post.pub_date}</p>
               <a href={post.channel}>{post.channel}</a>
             </li>
           ))}
-          <li></li>
         </ul>
       )}
     </div>

@@ -15,6 +15,19 @@ h1 {
   text-shadow: 1px 1px 5px #fff;
 }
 
+.input {
+  display: block;
+  padding: 5px 10px;
+  max-width: 300px;
+  width: 100%;
+  border-radius: 10px;
+  background: rgba(56, 11, 125, 1);
+  color: #fff;
+}
+.input::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
+
 .btn {
   display: inline-block;
   border-radius: 10px;
@@ -55,18 +68,7 @@ h1 {
   font-size: 20px;
   margin-bottom: 10px;
 }
-.range input {
-  display: block;
-  padding: 5px 10px;
-  max-width: 300px;
-  width: 100%;
-  border-radius: 10px;
-  background: rgba(56, 11, 125, 1);
-  color: #fff;
-}
-.range input::placeholder {
-  color: rgba(255, 255, 255, 0.4);
-}
+
 .range-inputs {
   display: flex;
   flex-direction: column;
@@ -152,4 +154,10 @@ h1 {
 .requests-filter-button.notActive {
   text-decoration: line-through;
   opacity: 0.5;
+}
+.keyword-filter {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: start;
 }

@@ -30,15 +30,9 @@ ChartJS.register(
 
 interface NewsChartProps {
   resources: Resource[];
-  requestFilters: any;
-  setRequestFilters: any;
 }
 
-const NewsChart: React.FC<NewsChartProps> = ({
-  resources,
-  requestFilters,
-  setRequestFilters,
-}) => {
+const NewsChart: React.FC<NewsChartProps> = ({ resources }) => {
   const [startDate, setStartDate] = React.useState(formatDate(START_DATE));
   const [endDate, setEndDate] = React.useState(formatDate(new Date()));
   const [chartStartDate, setChartStartDate] = React.useState(formatDate(START_DATE));

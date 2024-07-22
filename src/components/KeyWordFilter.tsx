@@ -1,17 +1,35 @@
 import React from "react";
+import { useFilterContext } from "../hooks/useFilterContext";
 
 interface KeyWordFilterProps {}
 
 const KeyWordFilter: React.FC<KeyWordFilterProps> = () => {
+  const { keywordFilter } = useFilterContext();
   const inputRef = React.useRef<HTMLInputElement>(null);
 
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {};
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const value = inputRef.current?.value;
+
+    if (typeof value === "string") {
+      keywordFilter.setFilter(value.trim());
+    }
+  };
 
   return (
-    <form onSubmit={onSubmit}>
-      <label htmlFor="key-word-input">Введіть ключове слово</label>
-      <input ref={inputRef} type="text" id="key-word-input" />
-      <button className="btn btn_contained">Підтвердити</button>
+    <form className="keyword-filter" onSubmit={onSubmit}>
+      <h2 className="keyword-filter-title">Фільтр по ключовому слову</h2>
+      <input
+        className="input"
+        ref={inputRef}
+        placeholder="Введіть ключове слово"
+        type="text"
+        id="key-word-input"
+      />
+      <button type="submit" className="btn btn_contained">
+        Підтвердити
+      </button>
     </form>
   );
 };

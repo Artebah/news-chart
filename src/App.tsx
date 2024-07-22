@@ -2,6 +2,7 @@ import React from "react";
 import { InfoBar } from "./components/InfoBar";
 import { NewsChart } from "./components/NewsChart";
 import { FilterProvider } from "./contexts/FilterContext";
+import { filterDataByKeyword } from "./helpers/filterDataByKeyword";
 import { getResources } from "./helpers/getResources";
 import { DataType } from "./types/DataType";
 import { Request } from "./types/Request";
@@ -42,6 +43,12 @@ function App() {
     setResources(newResources);
   }, [requestFilters, requests]);
 
+  React.useEffect(() => {
+    const newResources = filterDataByKeyword(requests, keywordFilter);
+
+    setResources(newResources);
+  }, [requests, keywordFilter]);
+
   return (
     <div className="App">
       <div className="container">
@@ -51,11 +58,7 @@ function App() {
             keywordFilter: { setFilter: setKeywordFilter, value: keywordFilter },
             requestFilters: { setFilter: setRequestFilters, value: requestFilters },
           }}>
-          <NewsChart
-            requestFilters={requestFilters}
-            setRequestFilters={setRequestFilters}
-            resources={resources}
-          />
+          <NewsChart resources={resources} />
           <InfoBar resources={resources} />
         </FilterProvider>
       </div>

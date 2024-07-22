@@ -35,6 +35,7 @@ const Range: React.FC<RangeProps> = () => {
         <div className="range-inputs">
           <label htmlFor="startDateInput"></label>
           <input
+            className="input"
             defaultValue={startDate.value}
             ref={startDateInputRef}
             name="dateInput"
@@ -45,6 +46,7 @@ const Range: React.FC<RangeProps> = () => {
 
           <label htmlFor="endDateInput"></label>
           <input
+            className="input"
             defaultValue={endDate.value}
             ref={endDateInputRef}
             name="dateInput"
