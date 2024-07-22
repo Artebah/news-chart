@@ -1,4 +1,5 @@
 import React from "react";
+import { useFilterContext } from "../hooks/useFilterContext";
 import { TimeFilterValues } from "../types/TimeFilterValues";
 
 interface IButtonData {
@@ -13,19 +14,18 @@ const buttonsData: IButtonData[] = [
   { name: "Секунди", value: "seconds" },
 ];
 
-interface TimeFilterProps {
-  setFilterByTime: any;
-  filterByTime: TimeFilterValues;
-}
+interface TimeFilterProps {}
 
-const TimeFilter: React.FC<TimeFilterProps> = ({ setFilterByTime, filterByTime }) => {
+const TimeFilter: React.FC<TimeFilterProps> = ({}) => {
+  const { filterByTime } = useFilterContext();
+
   const setActiveClass = (value: TimeFilterValues) => {
-    return value === filterByTime ? "active" : "";
+    return value === filterByTime.value ? "active" : "";
   };
 
   const onButtonClick = (value: TimeFilterValues) => {
-    if (value !== filterByTime) {
-      setFilterByTime(value);
+    if (value !== filterByTime.value) {
+      filterByTime.setFilter(value);
     }
   };
 

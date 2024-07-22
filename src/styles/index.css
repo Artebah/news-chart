@@ -142,11 +142,12 @@ h1 {
   display: flex;
   gap: 5px;
 }
-.requests-filter {
+.requests-filter-buttons {
   display: flex;
   max-width: 400px;
   flex-wrap: wrap;
   gap: 10px;
+  margin-top: 10px;
 }
 .requests-filter-button.notActive {
   text-decoration: line-through;

@@ -1,28 +1,19 @@
 import React from "react";
+import { KeyWordFilter } from "./KeyWordFilter";
 import { Pagination } from "./Pagination";
 import { Range } from "./Range";
 import { RequestsFilter } from "./RequestsFilter";
 
-interface ActionsProps {
-  filterByTime: any;
-  requestFilters: any;
-  setRequestFilters: any;
-}
+interface ActionsProps {}
 
-const Actions: React.FC<ActionsProps> = ({
-  filterByTime,
-  requestFilters,
-  setRequestFilters,
-}) => {
+const Actions: React.FC<ActionsProps> = ({}) => {
   return (
     <div className="actions">
       <Range />
       <div className="actions-right">
-        <RequestsFilter
-          requestFilters={requestFilters}
-          setRequestFilters={setRequestFilters}
-        />
-        <Pagination filterByTime={filterByTime} />
+        <RequestsFilter />
+        <KeyWordFilter />
+        <Pagination />
       </div>
     </div>
   );

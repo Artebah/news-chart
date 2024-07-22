@@ -1,17 +1,16 @@
 import React from "react";
 import { useDateContext } from "../hooks/useDateContext";
-import { TimeFilterValues } from "../types/TimeFilterValues";
+import { useFilterContext } from "../hooks/useFilterContext";
 import { movePaginationDate } from "../utils/getNextPaginationDate";
 
-interface PaginationProps {
-  filterByTime: TimeFilterValues;
-}
+interface PaginationProps {}
 
-const Pagination: React.FC<PaginationProps> = ({ filterByTime }) => {
+const Pagination: React.FC<PaginationProps> = () => {
+  const { filterByTime } = useFilterContext();
   const { startDate, endDate, chartStartDate } = useDateContext();
   const [currentStartDate, setCurrentStartDate] = React.useState(startDate.value);
   const [currentEndDate, setCurrentEndDate] = React.useState(
-    movePaginationDate(startDate.value, filterByTime, "next")
+    movePaginationDate(startDate.value, filterByTime.value, "next")
   );
 
   const isBackDisabled = currentStartDate <= startDate.value;
@@ -19,20 +18,28 @@ const Pagination: React.FC<PaginationProps> = ({ filterByTime }) => {
 
   React.useEffect(() => {
     setCurrentStartDate(startDate.value);
-    setCurrentEndDate(movePaginationDate(startDate.value, filterByTime, "next"));
-  }, [startDate.value, filterByTime]);
+    setCurrentEndDate(movePaginationDate(startDate.value, filterByTime.value, "next"));
+  }, [startDate.value, filterByTime.value]);
 
   const onGoBack = () => {
-    const prevStartDate = movePaginationDate(currentStartDate, filterByTime, "back");
-    const prevEndDate = movePaginationDate(currentEndDate, filterByTime, "back");
+    const prevStartDate = movePaginationDate(
+      currentStartDate,
+      filterByTime.value,
+      "back"
+    );
+    const prevEndDate = movePaginationDate(currentEndDate, filterByTime.value, "back");
 
     chartStartDate.setDate(prevStartDate);
     setCurrentStartDate(prevStartDate);
     setCurrentEndDate(prevEndDate);
   };
   const onGoNext = () => {
-    const nextStartDate = movePaginationDate(currentStartDate, filterByTime, "next");
-    const nextEndDate = movePaginationDate(currentEndDate, filterByTime, "next");
+    const nextStartDate = movePaginationDate(
+      currentStartDate,
+      filterByTime.value,
+      "next"
+    );
+    const nextEndDate = movePaginationDate(currentEndDate, filterByTime.value, "next");
 
     chartStartDate.setDate(nextStartDate);
     setCurrentStartDate(nextStartDate);

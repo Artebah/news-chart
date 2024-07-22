@@ -1,28 +1,24 @@
 import React from "react";
-import { RequestFilter } from "../types/RequestFilter";
+import { useFilterContext } from "../hooks/useFilterContext";
 
-interface RequestsFilterProps {
-  requestFilters: RequestFilter[];
-  setRequestFilters: any;
-}
+interface RequestsFilterProps {}
 
-const RequestsFilter: React.FC<RequestsFilterProps> = ({
-  requestFilters,
-  setRequestFilters,
-}) => {
+const RequestsFilter: React.FC<RequestsFilterProps> = ({}) => {
+  const { requestFilters } = useFilterContext();
+
   const onClick = (name: string, isActive: boolean) => {
-    const updatedFilters = requestFilters.map((filter) =>
+    const updatedFilters = requestFilters.value.map((filter) =>
       filter.name === name ? { ...filter, isActive: !isActive } : filter
     );
 
-    setRequestFilters(updatedFilters);
+    requestFilters.setFilter(updatedFilters);
   };
 
   return (
     <div className="requests-filter">
       <h2>Фільтр запитів</h2>
       <div className="requests-filter-buttons">
-        {requestFilters.map(({ isActive, name }) => (
+        {requestFilters.value.map(({ isActive, name }) => (
           <button
             onClick={() => onClick(name, isActive)}
             key={name}
