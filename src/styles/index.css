@@ -114,3 +114,27 @@ h1 {
   justify-content: space-between;
   align-items: end;
 }
+
+.info-bar {
+  margin-top: 60px;
+}
+.info-bar-title {
+  font-size: 30px;
+  margin-bottom: 30px;
+}
+.info-bar-posts {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  row-gap: 15px;
+  column-gap: 10px;
+}
+.info-bar-posts a {
+  color: #e4c7fc;
+}
+.info-bar-posts a:hover {
+  text-decoration: none;
+}
+.info-bar-post-top {
+  display: flex;
+  gap: 5px;
+}

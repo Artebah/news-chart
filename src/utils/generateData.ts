@@ -1,6 +1,8 @@
 import { PAGINATION_LIMIT } from "../constants";
 import { binarySearch } from "../helpers/binarySearch";
 import { dateToTimestamp } from "../helpers/dateToTimestamp";
+import { getDates } from "../helpers/getDates";
+import { getPosts } from "../helpers/getPosts";
 import { getTimeFilterK } from "../helpers/getTimeFilterK";
 import { timestampToDate } from "../helpers/timestampToDate";
 import { InitDates } from "../types/InitDates";
@@ -12,8 +14,8 @@ function generateData(
   filterByTime: TimeFilterValues,
   startDateStr: string
 ) {
-  const posts = resources.flatMap((resource) => resource.Posts);
-  const dates = posts.map((post) => post.pub_date).reverse();
+  const posts = getPosts(resources);
+  const dates = getDates(posts);
 
   function fillNextTenSeconds(dates: string[]) {
     const timestamps = dates.map((date) => dateToTimestamp(date, filterByTime));

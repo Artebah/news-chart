@@ -1,4 +1,5 @@
 import React from "react";
+import { InfoBar } from "./components/InfoBar";
 import { NewsChart } from "./components/NewsChart";
 
 function App() {
@@ -20,7 +21,10 @@ function App() {
 
   return (
     <div className="App">
-      <NewsChart resources={resources} />
+      <div className="container">
+        <NewsChart resources={resources} />
+        <InfoBar resources={resources} />
+      </div>
     </div>
   );
 }

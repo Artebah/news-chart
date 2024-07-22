@@ -45,10 +45,8 @@ const NewsChart: React.FC<NewsChartProps> = ({ resources }) => {
         endDate: { setDate: setEndDate, value: endDate },
         chartStartDate: { setDate: setChartStartDate, value: chartStartDate },
       }}>
-      <div className="container">
-        <TopBar filterByTime={filterByTime} setFilterByTime={setFilterByTime} />
-        <CustomLine {...generateData(resources, filterByTime, chartStartDate)} />
-      </div>
+      <TopBar filterByTime={filterByTime} setFilterByTime={setFilterByTime} />
+      <CustomLine {...generateData(resources, filterByTime, chartStartDate)} />
     </DateProvider>
   );
 };
