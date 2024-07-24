@@ -14,14 +14,14 @@ function App() {
   const [resources, setResources] = React.useState<Resource[]>([]);
   const [requests, setRequests] = React.useState<Request[]>([]);
   const [requestFilters, setRequestFilters] = React.useState<RequestFilter[]>([]);
-  const [filterByTime, setFilterByTime] = React.useState<TimeFilterValues>("seconds");
+  const [filterByTime, setFilterByTime] = React.useState<TimeFilterValues>("days");
   const [keywordFilter, setKeywordFilter] = React.useState("");
 
   React.useEffect(() => {
     const getData = async () => {
       const response = await fetch("/data.json");
       const data: DataType = await response.json();
-
+      console.log("current data: ", data);
       const allRequestFilters = data.Requests.map((request) => ({
         name: request.Request,
         isActive: true,
@@ -30,6 +30,11 @@ function App() {
       setRequests(data.Requests);
       setRequestFilters(allRequestFilters);
     };
+
+    fetch("/realData.json")
+      .then((res) => res.json())
+      .then((data) => console.log("real data: ", data));
+
     getData();
   }, []);
 
@@ -58,8 +63,14 @@ function App() {
             keywordFilter: { setFilter: setKeywordFilter, value: keywordFilter },
             requestFilters: { setFilter: setRequestFilters, value: requestFilters },
           }}>
-          <NewsChart resources={resources} />
-          <InfoBar resources={resources} />
+          {!resources.length ? (
+            <h2>Завантажуємо дані...</h2>
+          ) : (
+            <>
+              <NewsChart resources={resources} />
+              <InfoBar resources={resources} />
+            </>
+          )}
         </FilterProvider>
       </div>
     </div>

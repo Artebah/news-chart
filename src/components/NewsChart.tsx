@@ -1,5 +1,5 @@
 import React from "react";
-import { CustomLine } from "./CustomLine";
+import { Highchart } from "./Highchart";
 import { TopBar } from "./TopBar";
 import { START_DATE } from "../constants";
 import { DateProvider } from "../contexts/DateContext";
@@ -46,7 +46,7 @@ const NewsChart: React.FC<NewsChartProps> = ({ resources }) => {
         chartStartDate: { setDate: setChartStartDate, value: chartStartDate },
       }}>
       <TopBar />
-      <CustomLine {...generateData(resources, filterByTime.value, chartStartDate)} />
+      <Highchart data={generateData(resources, filterByTime.value)} />
     </DateProvider>
   );
 };

@@ -1,67 +1,57 @@
-import { PAGINATION_LIMIT } from "../constants";
-import { binarySearch } from "../helpers/binarySearch";
 import { dateToTimestamp } from "../helpers/dateToTimestamp";
+import { getDataRange } from "../helpers/getDataRange";
 import { getDates } from "../helpers/getDates";
 import { getPosts } from "../helpers/getPosts";
 import { getTimeFilterK } from "../helpers/getTimeFilterK";
 import { timestampToDate } from "../helpers/timestampToDate";
-import { InitDates } from "../types/InitDates";
 import { Resource } from "../types/Resourse";
 import { TimeFilterValues } from "../types/TimeFilterValues";
+//import { PAGINATION_LIMIT } from "../constants";
+//import { binarySearch } from "../helpers/binarySearch";
+//import { getDataLimit } from "../helpers/getDataLimit";
+//import { timestampToDate } from "../helpers/timestampToDate";
+//import { InitDates } from "../types/InitDates";
+//import { TimeFilterValues } from "../types/TimeFilterValues";
 
-function generateData(
-  resources: Resource[],
-  filterByTime: TimeFilterValues,
-  startDateStr: string
-) {
+function generateData(resources: Resource[], filterByTime: TimeFilterValues) {
+  // * замер времени
+  const startTime = new Date();
+
   const posts = getPosts(resources);
   const dates = getDates(posts);
+  const timestamps = dates.map((date) => dateToTimestamp(date, filterByTime));
+  timestamps.sort((a, b) => a - b);
 
-  function fillNextTenSeconds(dates: string[]) {
-    const timestamps = dates.map((date) => dateToTimestamp(date, filterByTime));
-    timestamps.sort((a, b) => a - b);
+  const dataRange = getDataRange(filterByTime, timestamps);
+  const timeFilterK = getTimeFilterK(filterByTime);
 
-    const initDates: InitDates = {};
-    const startTime = dateToTimestamp(startDateStr, filterByTime);
-    const timeFilterK = getTimeFilterK(filterByTime);
+  const timestampsInDates = timestamps.map((t) => timestampToDate(t, filterByTime));
+  //console.log("timestamps In Dates: ", timestampsInDates);
 
-    let currentTime = startTime;
-    let i = binarySearch(timestamps, startTime);
+  const startTimestamp = timestamps[0];
+  const endTimestamp = startTimestamp + dataRange;
 
-    while (Object.keys(initDates).length < PAGINATION_LIMIT) {
-      const timestamp = timestamps[i];
+  let result: [number, number][] = [];
+  let postCounts: { [key: number]: number } = {};
 
-      //* count existing property
-      if (timestamp in initDates) {
-        initDates[timestamp] = initDates[timestamp] + 1;
-        i++;
-      } else {
-        //* check current date which should be. Starting from currentTime = startTime
-        if (timestamp === currentTime) {
-          initDates[timestamp] = 1;
-          currentTime += timeFilterK;
-          i++;
-        } else {
-          //* add 0 count
-          initDates[currentTime] = 0;
-          currentTime += timeFilterK;
-        }
-      }
-    }
+  //console.log("postCounts: ", postCounts);
 
-    return initDates;
+  //* Підрахунок постів
+  timestamps.forEach((timestamp) => {
+    postCounts[timestamp] = (postCounts[timestamp] || 0) + 1;
+  });
+
+  //* Генерація даних
+  for (let time = startTimestamp; time < endTimestamp; time += timeFilterK) {
+    const count = postCounts[time] || 0;
+    result.push([time, count]);
+    //result.push([timestampToDate(time, filterByTime), count]);
   }
 
-  const updatedDateCountsObject = fillNextTenSeconds(dates);
-
-  const timestamps = Object.keys(updatedDateCountsObject);
-  const labels = timestamps.map((timestamp) => timestampToDate(+timestamp, filterByTime));
-  const counts = Object.values(updatedDateCountsObject);
-
-  return {
-    labels,
-    counts,
-  };
+  // * замер времени
+  console.log("diff: ", (new Date().getTime() - startTime.getTime()) / 1000);
+  //console.log("result: ", result);
+  return result;
 }
 
 export { generateData };
