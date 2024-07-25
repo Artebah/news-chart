@@ -1,0 +1,47 @@
+@import "vars";
+
+.input {
+  display: block;
+  padding: 5px 10px;
+  max-width: 300px;
+  width: 100%;
+  border-radius: 10px;
+  background: rgba(56, 11, 125, 1);
+  color: #fff;
+}
+.input::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
+.panel {
+  border-radius: 10px;
+  background: #4a535d;
+  padding: 12px 15px;
+}
+.btn {
+  display: inline-block;
+  border-radius: 10px;
+  padding: 5px 10px;
+  transition: all 0.3s ease 0s;
+  font-size: 12px;
+  font-weight: 600;
+  color: #fff;
+}
+.btn:hover {
+}
+.btn:disabled {
+  color: #898f96;
+  cursor: no-drop;
+}
+
+.btn:hover:not(.active, :disabled) {
+  background: $active-bg;
+}
+.btn.active {
+  background: rgba(56, 11, 125, 1);
+  color: #e4c7fc;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto 0;
+}

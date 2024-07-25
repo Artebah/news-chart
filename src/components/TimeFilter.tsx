@@ -30,7 +30,7 @@ const TimeFilter: React.FC<TimeFilterProps> = ({}) => {
   };
 
   return (
-    <div className="time-filter-wrapper">
+    <div className="time-filter">
       {buttonsData.map(({ value, name }) => (
         <button
           className={"btn " + setActiveClass(value)}
