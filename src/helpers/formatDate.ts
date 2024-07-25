@@ -1,4 +1,4 @@
-export function formatDate(date: Date | string | number) {
+export function formatDate(date: Date | string | number, type: "full" | "part") {
   if (typeof date === "string") {
     date = new Date(date);
   }
@@ -15,7 +15,9 @@ export function formatDate(date: Date | string | number) {
   const minutes = String(date.getMinutes()).padStart(2, "0");
   const seconds = String(date.getSeconds()).padStart(2, "0");
 
-  const fullDateStr = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
-
-  return fullDateStr;
+  if (type === "full") {
+    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+  } else {
+    return `${year}-${month}-${day}-${hours}`;
+  }
 }

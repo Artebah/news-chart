@@ -60,9 +60,23 @@ timestamp = 20.07.2024 10:04:07
 ##Todo layout:
 
 - [] Панель запитів
-- [] Панель точності часу
+- [] Панель часових фільтрів
 - [] Змінити кольори графіку
 - [] Додати стрілочки на stack
 - [] Нижня панель для фільтру ліній
 - [] Блок створення запитів (потім розписати)
 ```
+
+`layout
+container
+    title (with margin-left)
+    Layout
+        Sidebar
+        Main
+            RequestsFilter
+            TimeFilters
+                TimeAccuracy
+                TimeRange
+            Chart
+            Lines
+`

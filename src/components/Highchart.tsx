@@ -16,6 +16,9 @@ const Highchart: React.FC<HighchartProps> = ({ data }) => {
       plotBorderColor: "",
       borderColor: "#fff",
     },
+    accessibility: {
+      enabled: false,
+    },
     xAxis: {
       gridLineColor: "#4e2173",
       grid: {
@@ -39,18 +42,8 @@ const Highchart: React.FC<HighchartProps> = ({ data }) => {
     },
     series: [
       {
-        name: "Постів",
+        name: "Кількість постів",
         data: data,
-        //data: [
-        //  [new Date("2024-07-10").getTime(), 4],
-        //  [new Date("2024-07-11").getTime(), 1],
-        //  [new Date("2024-07-12").getTime(), 7],
-        //  [new Date("2024-07-13").getTime(), 10],
-        //  [new Date("2024-07-14").getTime(), 4],
-        //  [new Date("2024-07-15").getTime(), 15],
-        //  [new Date("2024-07-16").getTime(), 3],
-        //  [new Date("2024-07-17").getTime(), 9],
-        //],
       },
     ],
   };

@@ -3,7 +3,7 @@ import { RequestFilter } from "../types/RequestFilter";
 import { TimeFilterValues } from "../types/TimeFilterValues";
 
 interface IFilterContext {
-  requestFilters: {
+  requestsFilter: {
     setFilter: any;
     value: RequestFilter[];
   };
@@ -18,7 +18,7 @@ interface IFilterContext {
 }
 
 export const FilterContext = React.createContext<IFilterContext>({
-  requestFilters: {
+  requestsFilter: {
     setFilter: null,
     value: [],
   },
@@ -28,7 +28,7 @@ export const FilterContext = React.createContext<IFilterContext>({
   },
   filterByTime: {
     setFilter: null,
-    value: "seconds",
+    value: "days",
   },
 });
 
