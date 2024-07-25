@@ -1,10 +1,12 @@
 import React from "react";
+import { ChartMain } from "./components/ChartMain";
 import { getResources } from "./helpers/getResources";
 import { DataType } from "./types/DataType";
 import { Request } from "./types/Request";
 import { RequestFilter } from "./types/RequestFilter";
 import { Resource } from "./types/Resourse";
 import { TimeFilterValues } from "./types/TimeFilterValues";
+import { fetchData } from "./utils/fetchData";
 //import { InfoBar } from "./components/InfoBar";
 //import { NewsChart } from "./components/NewsChart";
 //import { FilterProvider } from "./contexts/FilterContext";
@@ -52,7 +54,11 @@ function App() {
         <div className="layout">
           <aside className="sidebar"></aside>
           <main className="main">
-            {!resources.length ? <h2>Завантажуємо дані...</h2> : <></>}
+            {!resources.length ? (
+              <h2>Завантажуємо дані...</h2>
+            ) : (
+              <ChartMain resources={resources} filterByTime={filterByTime} />
+            )}
           </main>
         </div>
 
