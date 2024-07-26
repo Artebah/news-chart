@@ -13,17 +13,22 @@ const RequestsButtonsGroup: React.FC<RequestsButtonsGroupProps> = ({
   children,
 }) => {
   const FolderIcon = /*"isActive"*/ false ? FolderOpenSvg : FolderSvg;
+  const [isActive, setIsActive] = React.useState(false);
+
+  const onClick = () => {
+    setIsActive(!isActive);
+  };
 
   return (
-    <div className="group-requests _open">
-      <button className="group-requests-button">
+    <div className={"group-requests " + (isActive ? "_open" : "")}>
+      <button onClick={onClick} className="group-requests-button btn">
         <span className="group-requests-button-arrow">
           <ArrowIcon />
         </span>
         <FolderIcon className="group-requests-button-folder" />
         <span className="group-requests-button-name">{name}</span>
       </button>
-      <div>{children}</div>
+      <div className="group-requests-nested-buttons">{children}</div>
     </div>
   );
 };

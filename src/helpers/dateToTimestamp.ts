@@ -10,5 +10,9 @@ export function dateToTimestamp(date: string, filterByTime: TimeFilterValues) {
       return new Date(date.slice(0, -6) + ":00:00").getTime();
     case "days":
       return new Date(date.slice(0, -9)).getTime();
+    case "months":
+      return new Date(date.slice(0, -12)).getTime();
+    case "years":
+      return new Date(date.slice(0, -15)).getTime();
   }
 }

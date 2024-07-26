@@ -8,10 +8,12 @@ interface IButtonData {
 }
 
 const buttonsData: IButtonData[] = [
-  { name: "Дні", value: "days" },
-  { name: "Години", value: "hours" },
-  { name: "Хвилини", value: "minutes" },
   { name: "Секунди", value: "seconds" },
+  { name: "Хвилини", value: "minutes" },
+  { name: "Години", value: "hours" },
+  { name: "Дні", value: "days" },
+  //{ name: "Місяці", value: "months" },
+  //{ name: "Роки", value: "years" },
 ];
 
 interface TimeFilterProps {}
@@ -20,7 +22,7 @@ const TimeFilter: React.FC<TimeFilterProps> = ({}) => {
   const { filterByTime } = useFilterContext();
 
   const setActiveClass = (value: TimeFilterValues) => {
-    return value === filterByTime.value ? "active" : "";
+    return value === filterByTime.value ? "_active" : "";
   };
 
   const onButtonClick = (value: TimeFilterValues) => {
@@ -33,7 +35,7 @@ const TimeFilter: React.FC<TimeFilterProps> = ({}) => {
     <div className="time-filter">
       {buttonsData.map(({ value, name }) => (
         <button
-          className={"btn " + setActiveClass(value)}
+          className={"time-filter-button " + setActiveClass(value)}
           key={value}
           onClick={() => onButtonClick(value)}>
           {name}

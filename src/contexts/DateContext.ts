@@ -9,10 +9,6 @@ interface IDateContext {
     setDate: any;
     value: any;
   };
-  chartStartDate: {
-    setDate: any;
-    value: any;
-  };
 }
 
 export const DateContext = React.createContext<IDateContext>({
@@ -21,10 +17,6 @@ export const DateContext = React.createContext<IDateContext>({
     value: null,
   },
   endDate: {
-    setDate: null,
-    value: null,
-  },
-  chartStartDate: {
     setDate: null,
     value: null,
   },

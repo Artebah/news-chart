@@ -10,6 +10,10 @@ const getTimeFilterK = (filterByTime: TimeFilterValues) => {
       return 1000 * 60 * 60;
     case "days":
       return 1000 * 60 * 60 * 24;
+    case "months":
+      return 1000 * 60 * 60 * 24 * 28;
+    case "years":
+      return 1000 * 60 * 60 * 24 * 28 * 12;
   }
 };
 

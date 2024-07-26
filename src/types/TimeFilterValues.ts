@@ -1,1 +1,7 @@
-export type TimeFilterValues = "days" | "hours" | "minutes" | "seconds";
+export type TimeFilterValues =
+  | "years"
+  | "months"
+  | "days"
+  | "hours"
+  | "minutes"
+  | "seconds";

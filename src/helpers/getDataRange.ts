@@ -6,12 +6,16 @@ export function getDataRange(filterByTime: TimeFilterValues, timestamps: number[
 
   switch (filterByTime) {
     case "seconds":
-      return DAY_IN_MILLISECONDS * 7;
+      return DAY_IN_MILLISECONDS * 3;
     case "minutes":
       return DAY_IN_MILLISECONDS * 7;
     case "hours":
       return DAY_IN_MILLISECONDS * 30;
     case "days":
+      return DAY_IN_MILLISECONDS * 60;
+    case "months":
+      return FULL_TIME;
+    case "years":
       return FULL_TIME;
   }
 }

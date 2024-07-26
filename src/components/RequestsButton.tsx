@@ -10,7 +10,7 @@ const RequestsButton: React.FC<RequestsButtonProps> = ({ name, grouped, disabled
   return (
     <button
       disabled={disabled}
-      className={"requests-filter-button btn" + (grouped ? "_grouped" : "")}>
+      className={"requests-filter-button btn " + (grouped ? "_grouped" : "")}>
       {name}
     </button>
   );

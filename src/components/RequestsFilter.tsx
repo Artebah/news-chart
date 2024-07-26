@@ -23,9 +23,9 @@ const RequestsFilter: React.FC<RequestsFilterProps> = () => {
         <RequestsButton name="Запит 1" />
         <RequestsButton name="Запит 2" disabled />
         <RequestsButtonsGroup name="Група запитів 1">
-          <RequestsButton name="Запит 1" />
-          <RequestsButton name="Запит 2" />
-          <RequestsButton name="Запит 3" />
+          <RequestsButton grouped name="Запит 1" />
+          <RequestsButton disabled grouped name="Запит 2" />
+          <RequestsButton grouped name="Запит 3" />
         </RequestsButtonsGroup>
       </div>
 
