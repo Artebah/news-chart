@@ -1,11 +1,11 @@
 import React from "react";
-import { RequestFilter } from "../types/RequestFilter";
+import { IFilterRequest } from "../types/IFilterRequest";
 import { TimeFilterValues } from "../types/TimeFilterValues";
 
 interface IFilterContext {
   requestsFilter: {
     setFilter: any;
-    value: RequestFilter[];
+    value: IFilterRequest[];
   };
   keywordFilter: {
     setFilter: any;

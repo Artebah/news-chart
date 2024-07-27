@@ -65,13 +65,16 @@ timestamp = 20.07.2024 10:04:07
 - [x] Додати стрілочки на stack
 - [x] Нижня панель для фільтру ліній
 - [] Додати нові лінії на графік
-- [] Блок створення запитів (потім розписати)
+- [] Блок створення запитів
+    Верстка
+
 - [] Додати іконки в Sidebar, змінити іконку папки
+- [] Додати фільтр по ключ слову
 - [] Блок з джерелами
 - [] Локалізація
 ```
 
-`layout
+```layout
 container
     title (with margin-left)
     Layout
@@ -83,4 +86,19 @@ container
                 TimeRange
             Chart
             Lines
-`
+```
+
+```Requests-filter-add layout
+    requests-panel
+        isCreateRequests ?
+        (DefaultLayout) : (CreateLayout)
+
+        CreateLayout
+            panel with 2 buttons
+            requests-list block
+                CreateRequestItem
+                    it is a wrapper with delete button
+                    and you can change names of group or request
+                        using contenteditable
+
+```

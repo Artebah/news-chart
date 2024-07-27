@@ -1,34 +1,82 @@
+import classNames from "classnames";
 import React from "react";
+import { CreateRequestItem } from "./CreateRequestItem";
+import { RequestsButton } from "./RequestsButton";
 import { ReactComponent as ArrowIcon } from "../assets/icons/arrow.svg";
 import { ReactComponent as FolderOpenSvg } from "../assets/icons/group-open.svg";
 import { ReactComponent as FolderSvg } from "../assets/icons/group.svg";
+import { IFilterRequest } from "../types/IFilterRequest";
 
 interface RequestsButtonsGroupProps {
-  name: string;
-  children: React.ReactNode;
+  active?: boolean;
+  request: IFilterRequest;
+  isEdit?: boolean;
+  isEditable?: boolean;
+  setIsEditable?: any;
+  setEditedName?: any;
 }
 
 const RequestsButtonsGroup: React.FC<RequestsButtonsGroupProps> = ({
-  name,
-  children,
+  request,
+  isEdit,
+  isEditable,
+  setIsEditable,
+  setEditedName,
 }) => {
-  const FolderIcon = /*"isActive"*/ false ? FolderOpenSvg : FolderSvg;
-  const [isActive, setIsActive] = React.useState(false);
+  const [isOpen, setIsOpen] = React.useState(false);
+  const FolderIcon = isOpen ? FolderOpenSvg : FolderSvg;
 
   const onClick = () => {
-    setIsActive(!isActive);
+    setIsOpen(!isOpen);
+  };
+
+  const onBlur = (e: React.FocusEvent<HTMLInputElement, Element>) => {
+    const value = e.target.value;
+
+    setEditedName(value);
+    setIsEditable(false);
   };
 
   return (
-    <div className={"group-requests " + (isActive ? "_open" : "")}>
-      <button onClick={onClick} className="group-requests-button btn">
+    <div className={classNames("group-requests", { _open: isOpen, _edit: isEdit })}>
+      <button
+        onClick={isEditable ? undefined : onClick}
+        disabled={request.disabled}
+        className={classNames("group-requests-button", {
+          _active: request.active,
+          _edit: isEdit,
+          btn: !isEdit,
+        })}>
         <span className="group-requests-button-arrow">
           <ArrowIcon />
         </span>
         <FolderIcon className="group-requests-button-folder" />
-        <span className="group-requests-button-name">{name}</span>
+        {isEditable ? (
+          <input
+            className="requests-filter-input"
+            onBlur={onBlur}
+            defaultValue={request.name}
+            type="text"
+          />
+        ) : (
+          <span contentEditable={isEditable} className="group-requests-button-name">
+            {request.name}
+          </span>
+        )}
       </button>
-      <div className="group-requests-nested-buttons">{children}</div>
+
+      <div className="group-requests-nested-buttons">
+        {request.list?.map((nestedRequest) =>
+          isEdit ? (
+            <CreateRequestItem key={nestedRequest.name} request={nestedRequest} />
+          ) : (
+            <RequestsButton key={nestedRequest.name} grouped request={nestedRequest} />
+          )
+        )}
+        {isEdit && (
+          <button className="group-requests-nested-buttons-add btn">Додати запит</button>
+        )}
+      </div>
     </div>
   );
 };

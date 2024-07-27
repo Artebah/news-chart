@@ -12,13 +12,20 @@ interface ChartMainProps {
 }
 
 const ChartMain: React.FC<ChartMainProps> = ({ resources, filterByTime, startDate }) => {
+  const [openEditRequestsMenu, setOpenEditRequestsMenu] = React.useState(false);
+
   return (
     <div className="chart-main">
-      <RequestsFilter />
-      <TimeAccuracy />
-      <Highchart
-        data={generateData(resources, filterByTime, formatDate(startDate, "full"))}
+      <RequestsFilter
+        setOpenEditRequestsMenu={setOpenEditRequestsMenu}
+        openEditRequestsMenu={openEditRequestsMenu}
       />
+      <TimeAccuracy />
+      {!openEditRequestsMenu && (
+        <Highchart
+          data={generateData(resources, filterByTime, formatDate(startDate, "full"))}
+        />
+      )}
     </div>
   );
 };

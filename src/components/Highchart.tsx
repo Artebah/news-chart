@@ -127,17 +127,10 @@ const Highchart: React.FC<HighchartProps> = ({ data }) => {
     if (chartRef.current && data.length > 0) {
       const chart = chartRef.current.chart;
 
-      console.log("chart data", data);
+      //console.log("chart data", data);
       chart.xAxis[0].setExtremes(data[0][0], data[10][0]);
     }
   }, [data]);
-
-  //const updateRange = (min, max) => {
-  //  if (chartRef.current) {
-  //    const chart = chartRef.current.chart;
-  //    chart.xAxis[0].setExtremes(min, max);
-  //  }
-  //};
 
   return (
     <div className="highchart panel">
