@@ -9,8 +9,6 @@ interface RequestsButtonProps {
   isEditable?: boolean;
   setIsEditable?: any;
   setEditedName?: any;
-  setIsActive?: any;
-  isActive?: boolean;
 }
 
 const RequestsButton: React.FC<RequestsButtonProps> = ({
@@ -20,17 +18,12 @@ const RequestsButton: React.FC<RequestsButtonProps> = ({
   isEditable,
   setIsEditable,
   setEditedName,
-  setIsActive,
-  isActive,
 }) => {
   const onBlur = (e: React.FocusEvent<HTMLInputElement, Element>) => {
     const value = e.target.value;
 
     setEditedName(value);
     setIsEditable(false);
-  };
-  const onButtonClick = () => {
-    setIsActive(!isActive);
   };
 
   return isEditable ? (
@@ -42,9 +35,9 @@ const RequestsButton: React.FC<RequestsButtonProps> = ({
     />
   ) : (
     <button
-      onClick={onButtonClick}
       disabled={request.disabled}
       className={classNames("requests-filter-button", {
+        _active: request.active,
         _edit: isEdit,
         _gruped: grouped,
       })}>

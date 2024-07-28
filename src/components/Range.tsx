@@ -1,6 +1,5 @@
 import React from "react";
 import { START_DATE } from "../constants";
-import { areDatesValide } from "../helpers/areDatesValide";
 import { formatDate } from "../helpers/formatDate";
 import { useDateContext } from "../hooks/useDateContext";
 

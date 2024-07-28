@@ -171,12 +171,12 @@ iframe {
       background: #555;
     }
   }
-  //&-button.notActive {
-  //  text-decoration: line-through;
-  //  opacity: 0.5;
-  //}
+
   &-button {
     height: 30px;
+
+    &._active {
+    }
 
     &._grouped {
       width: 100%;

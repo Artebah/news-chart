@@ -18,7 +18,7 @@ const buttonsData: IButtonData[] = [
 
 interface TimeFilterProps {}
 
-const TimeFilter: React.FC<TimeFilterProps> = ({}) => {
+const TimeFilter: React.FC<TimeFilterProps> = () => {
   const { filterByTime } = useFilterContext();
 
   const setActiveClass = (value: TimeFilterValues) => {

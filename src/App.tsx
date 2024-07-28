@@ -10,70 +10,70 @@ import { IFilterRequest } from "./types/IFilterRequest";
 import { Request } from "./types/Request";
 import { Resource } from "./types/Resourse";
 import { TimeFilterValues } from "./types/TimeFilterValues";
-import { fetchData } from "./utils/fetchData";
+//import { fetchData } from "./utils/fetchData";
 //import { InfoBar } from "./components/InfoBar";
 //import { NewsChart } from "./components/NewsChart";
 //import { FilterProvider } from "./contexts/FilterContext";
 
-const fakeRequestsFilter: IFilterRequest[] = [
-  {
-    name: "Request 1",
-    active: true,
-    deleted: false,
-    disabled: false,
-    list: [
-      {
-        name: "Sub Request 1",
-        active: true,
-        deleted: false,
-      },
-      {
-        name: "Sub Request 2",
-        active: false,
-        deleted: true,
-      },
-    ],
-  },
-  {
-    name: "Request 2",
-    active: false,
-    deleted: true,
-    list: [
-      {
-        name: "Sub Request 3",
-        active: true,
-        deleted: false,
-      },
-    ],
-  },
-  {
-    name: "Request 3",
-    active: true,
-    deleted: false,
-    disabled: true,
-  },
-  {
-    name: "Request 4",
-    active: false,
-    deleted: false,
-  },
-  {
-    name: "Request 5",
-    active: true,
-    deleted: true,
-  },
-  {
-    name: "Request 6",
-    active: false,
-    deleted: false,
-    disabled: true,
-  },
-  {
-    name: "Request 7",
-    active: true,
-    deleted: false,
-  },
-];
+//const fakeRequestsFilter: IFilterRequest[] = [
+//  {
+//    name: "Request 1",
+//    active: true,
+//    deleted: false,
+//    disabled: false,
+//    list: [
+//      {
+//        name: "Sub Request 1",
+//        active: true,
+//        deleted: false,
+//      },
+//      {
+//        name: "Sub Request 2",
+//        active: false,
+//        deleted: true,
+//      },
+//    ],
+//  },
+//  {
+//    name: "Request 2",
+//    active: false,
+//    deleted: true,
+//    list: [
+//      {
+//        name: "Sub Request 3",
+//        active: true,
+//        deleted: false,
+//      },
+//    ],
+//  },
+//  {
+//    name: "Request 3",
+//    active: true,
+//    deleted: false,
+//    disabled: true,
+//  },
+//  {
+//    name: "Request 4",
+//    active: false,
+//    deleted: false,
+//  },
+//  {
+//    name: "Request 5",
+//    active: true,
+//    deleted: true,
+//  },
+//  {
+//    name: "Request 6",
+//    active: false,
+//    deleted: false,
+//    disabled: true,
+//  },
+//  {
+//    name: "Request 7",
+//    active: true,
+//    deleted: false,
+//  },
+//];
 
 function App() {
   const [resources, setResources] = React.useState<Resource[]>([]);

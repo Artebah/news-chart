@@ -7,8 +7,8 @@ export async function fetchData(dateFrom: Date, dateTo: Date, keywordFilter: str
   const params = new URLSearchParams({
     //token,
     //channelids,
-    dateFrom: formatDate(dateFrom, "part"),
-    dateTo: formatDate(dateTo, "part"),
+    dateFrom: formatDate(dateFrom, "byHour"),
+    dateTo: formatDate(dateTo, "byHour"),
     keywordFilter,
   });
 
