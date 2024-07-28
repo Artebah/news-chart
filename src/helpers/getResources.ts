@@ -1,5 +1,8 @@
 import { Request } from "../types/Request";
 
 export function getResources(requests: Request[]) {
-  return requests.flatMap((request) => request.Resources);
+  const resources = requests.flatMap((request) => request.Resources);
+  resources.sort((a, b) => a.ResourceID - b.ResourceID);
+
+  return resources;
 }

@@ -86,8 +86,10 @@ function App() {
 
   React.useEffect(() => {
     const getData = async () => {
-      const response = await fetch("/realData.json");
+      const response = await fetch("/dbdata.json");
       const data: DataType = await response.json();
+
+      console.log(data);
 
       const allRequestsFilter = data.Requests.map(
         (request): IFilterRequest => ({

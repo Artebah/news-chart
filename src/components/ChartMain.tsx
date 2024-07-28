@@ -14,6 +14,12 @@ interface ChartMainProps {
 const ChartMain: React.FC<ChartMainProps> = ({ resources, filterByTime, startDate }) => {
   const [openEditRequestsMenu, setOpenEditRequestsMenu] = React.useState(false);
 
+  React.useEffect(() => {
+    const data = generateData(resources, filterByTime, formatDate(startDate, "full"));
+
+    console.log(data);
+  }, [filterByTime, resources, startDate]);
+
   return (
     <div className="chart-main">
       <RequestsFilter
@@ -23,7 +29,11 @@ const ChartMain: React.FC<ChartMainProps> = ({ resources, filterByTime, startDat
       <TimeAccuracy />
       {!openEditRequestsMenu && (
         <Highchart
-          data={generateData(resources, filterByTime, formatDate(startDate, "full"))}
+          groupedData={generateData(
+            resources,
+            filterByTime,
+            formatDate(startDate, "full")
+          )}
         />
       )}
     </div>

@@ -1,60 +1,64 @@
 import { binarySearch } from "../helpers/binarySearch";
 import { dateToTimestamp } from "../helpers/dateToTimestamp";
 import { getDataRange } from "../helpers/getDataRange";
-import { getDates } from "../helpers/getDates";
-import { getPosts } from "../helpers/getPosts";
 import { getTimeFilterK } from "../helpers/getTimeFilterK";
-import { timestampToDate } from "../helpers/timestampToDate";
+import { GeneratedData } from "../types/GeneratedData";
 import { Resource } from "../types/Resourse";
 import { TimeFilterValues } from "../types/TimeFilterValues";
-//import { PAGINATION_LIMIT } from "../constants";
-//import { getDataLimit } from "../helpers/getDataLimit";
-//import { timestampToDate } from "../helpers/timestampToDate";
-//import { InitDates } from "../types/InitDates";
-//import { TimeFilterValues } from "../types/TimeFilterValues";
 
 function generateData(
   resources: Resource[],
   filterByTime: TimeFilterValues,
   startDateStr: string
 ) {
-  // * замер времени
   const counter = new Date();
 
-  const timestamps = resources.flatMap(
-    (resource) =>
-      resource.Posts.map((post) => dateToTimestamp(post.pub_date, filterByTime))
-    //resource.Posts.map((post) => post.pub_date)
-  );
-  timestamps.sort((a, b) => a - b);
+  const groupedTimestamps: { [key: number]: number[] } = {};
+  const postCounts: { [key: number]: Map<number, number> } = {};
 
-  const dataRange = getDataRange(filterByTime, timestamps);
-  const timeFilterK = getTimeFilterK(filterByTime);
+  resources.forEach((resource) => {
+    const resourceID = resource.ResourceID - 1;
 
-  //const timestampsInDates = timestamps.map((t) => timestampToDate(t, filterByTime));
-  //console.log("timestamps In Dates: ", timestampsInDates);
-  const startElementIndex = binarySearch(
-    timestamps,
-    dateToTimestamp(startDateStr, filterByTime)
-  );
-  const startTimestamp = timestamps[startElementIndex];
-  const endTimestamp = startTimestamp + dataRange;
+    if (!groupedTimestamps[resourceID]) {
+      groupedTimestamps[resourceID] = [];
+      postCounts[resourceID] = new Map<number, number>();
+    }
 
-  let result: [number, number][] = [];
-  let postCounts: { [key: number]: number } = {};
+    resource.Posts.forEach((post) => {
+      const timestamp = dateToTimestamp(post.pub_date, filterByTime);
 
-  //* Підрахунок постів
-  timestamps.forEach((timestamp) => {
-    postCounts[timestamp] = (postCounts[timestamp] || 0) + 1;
+      groupedTimestamps[resourceID].push(timestamp);
+      postCounts[resourceID].set(
+        timestamp,
+        (postCounts[resourceID].get(timestamp) || 0) + 1
+      );
+    });
   });
 
-  //* Генерація даних
-  for (let time = startTimestamp; time < endTimestamp; time += timeFilterK) {
-    const count = postCounts[time] || 0;
-    result.push([time, count]);
-  }
+  const result: GeneratedData = [[], [], [], [], []];
 
-  // * замер времени
+  Object.keys(groupedTimestamps).forEach((resourceID) => {
+    const timestamps = groupedTimestamps[+resourceID].sort((a, b) => a - b);
+    const dataRange = getDataRange(filterByTime, timestamps);
+    const timeFilterK = getTimeFilterK(filterByTime);
+
+    const startElementIndex = binarySearch(
+      timestamps,
+      dateToTimestamp(startDateStr, filterByTime)
+    );
+    const startTimestamp = timestamps[startElementIndex];
+    const endTimestamp = startTimestamp + dataRange;
+
+    let resourceResult: [number, number][] = [];
+
+    for (let time = startTimestamp; time < endTimestamp; time += timeFilterK) {
+      const count = postCounts[+resourceID].get(time) || 0;
+      resourceResult.push([time, count]);
+    }
+
+    result[+resourceID] = resourceResult;
+  });
+
   console.log("diff: ", (new Date().getTime() - counter.getTime()) / 1000);
   return result;
 }
