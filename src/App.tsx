@@ -83,13 +83,14 @@ function App() {
   const [keywordFilter, setKeywordFilter] = React.useState("");
   const [startDate, setStartDate] = React.useState(new Date(START_DATE));
   const [endDate, setEndDate] = React.useState(new Date());
+  const [isLoadingResources, setIsLoadingResources] = React.useState(false);
 
   React.useEffect(() => {
+    setIsLoadingResources(true);
+
     const getData = async () => {
       const response = await fetch("/dbdata.json");
       const data: DataType = await response.json();
-
-      console.log(data);
 
       const allRequestsFilter = data.Requests.map(
         (request): IFilterRequest => ({
@@ -130,6 +131,12 @@ function App() {
     }
   }, [requestsFilter, requests]);
 
+  React.useEffect(() => {
+    if (resources.length) {
+      setIsLoadingResources(false);
+    }
+  }, [resources]);
+
   return (
     <div className="App">
       <div className="container">
@@ -148,15 +155,12 @@ function App() {
             <div className="layout">
               <Sidebar />
               <main className="main">
-                {!resources.length ? (
-                  <h2>Завантажуємо дані...</h2>
-                ) : (
-                  <ChartMain
-                    resources={resources}
-                    startDate={startDate}
-                    filterByTime={filterByTime}
-                  />
-                )}
+                <ChartMain
+                  isLoadingResources={isLoadingResources}
+                  resources={resources}
+                  startDate={startDate}
+                  filterByTime={filterByTime}
+                />
               </main>
             </div>
           </FilterProvider>

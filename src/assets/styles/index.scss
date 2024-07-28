@@ -175,7 +175,9 @@ iframe {
   &-button {
     height: 30px;
 
-    &._active {
+    &._notActive {
+      opacity: 0.5;
+      text-decoration: line-through;
     }
 
     &._grouped {

@@ -15,7 +15,7 @@ const CreateRequestItem: React.FC<CreateRequestItemProps> = ({ request }) => {
   const { requestsFilter } = useFilterContext();
   const [isEditable, setIsEditable] = React.useState(false);
   const [editedName, setEditedName] = React.useState("");
-  const [isActive, IsActive] = React.useState(true);
+  const [isActive, setIsActive] = React.useState(true);
 
   React.useEffect(() => {
     if (editedName !== "") {
@@ -38,14 +38,22 @@ const CreateRequestItem: React.FC<CreateRequestItemProps> = ({ request }) => {
   const onEdit = () => {
     setIsEditable(!isEditable);
   };
+
   const onToggleActive = () => {
-    IsActive(isActive);
+    setIsActive(!isActive);
+
+    const newRequestsFilter = getChangedRequestsFilter(requestsFilter, request.name, {
+      active: !isActive,
+    });
+
+    requestsFilter.setFilter(newRequestsFilter);
   };
 
   return (
     <div className="item-requests-filter">
       <input
         onChange={onToggleActive}
+        checked={request.active}
         type="checkbox"
         name="item-requests-filter-checkbox"
       />

@@ -24,23 +24,19 @@ const RequestsFilter: React.FC<RequestsFilterProps> = ({
     setOpenEditRequestsMenu(false);
   };
 
-  //const onClick = (name: string, isActive: boolean) => {
-  //  const updatedFilters = requestsFilter.value.map((filter) =>
-  //    filter.name === name ? { ...filter, isActive: !isActive } : filter
-  //  );
-
-  //  requestsFilter.setFilter(updatedFilters);
-  //};
-
   const defaultLayout = (
     <>
       <div className="requests-filter-buttons ">
-        {requestsFilter.value.map((request) =>
-          request.list ? (
-            <RequestsButtonsGroup key={request.name} request={request} />
-          ) : (
-            <RequestsButton key={request.name} request={request} />
+        {requestsFilter.value.length ? (
+          requestsFilter.value.map((request) =>
+            request.list ? (
+              <RequestsButtonsGroup key={request.name} request={request} />
+            ) : (
+              <RequestsButton key={request.name} request={request} />
+            )
           )
+        ) : (
+          <p>Немає фільтрів запитів :(</p>
         )}
       </div>
       <button onClick={openEditMenuHandle} className="requests-filter-edit">

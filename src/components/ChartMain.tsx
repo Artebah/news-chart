@@ -3,22 +3,32 @@ import { Highchart } from "./Highchart";
 import { RequestsFilter } from "./RequestsFilter";
 import { TimeAccuracy } from "./TimeAccuracy";
 import { formatDate } from "../helpers/formatDate";
+import { Resource } from "../types/Resourse";
 import { generateData } from "../utils/generateData";
 
 interface ChartMainProps {
-  resources: any;
+  resources: Resource[];
+  isLoadingResources: boolean;
   filterByTime: any;
   startDate: any;
 }
 
-const ChartMain: React.FC<ChartMainProps> = ({ resources, filterByTime, startDate }) => {
+const ChartMain: React.FC<ChartMainProps> = ({
+  resources,
+  filterByTime,
+  startDate,
+  isLoadingResources,
+}) => {
   const [openEditRequestsMenu, setOpenEditRequestsMenu] = React.useState(false);
 
-  React.useEffect(() => {
-    const data = generateData(resources, filterByTime, formatDate(startDate, "full"));
+  //React.useEffect(() => {
+  //  const data = generateData(resources, filterByTime, formatDate(startDate, "full"));
 
-    console.log(data);
-  }, [filterByTime, resources, startDate]);
+  //  console.log(data);
+  //}, [filterByTime, resources, startDate]);
+  //console.log(isLoadingResources);
+
+  console.log(!resources.length && !isLoadingResources && <h2>Немає даних :(</h2>);
 
   return (
     <div className="chart-main">
@@ -27,7 +37,10 @@ const ChartMain: React.FC<ChartMainProps> = ({ resources, filterByTime, startDat
         openEditRequestsMenu={openEditRequestsMenu}
       />
       <TimeAccuracy />
-      {!openEditRequestsMenu && (
+      {isLoadingResources && <h2>Завантажуємо дані, зачекайте...</h2>}
+      {!resources.length && !isLoadingResources && <h2>Немає даних :(</h2>}
+
+      {resources.length && !openEditRequestsMenu && !isLoadingResources ? (
         <Highchart
           groupedData={generateData(
             resources,
@@ -35,6 +48,8 @@ const ChartMain: React.FC<ChartMainProps> = ({ resources, filterByTime, startDat
             formatDate(startDate, "full")
           )}
         />
+      ) : (
+        <></>
       )}
     </div>
   );

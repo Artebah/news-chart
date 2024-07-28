@@ -37,7 +37,7 @@ const RequestsButton: React.FC<RequestsButtonProps> = ({
     <button
       disabled={request.disabled}
       className={classNames("requests-filter-button", {
-        _active: request.active,
+        _notActive: !request.active,
         _edit: isEdit,
         _gruped: grouped,
       })}>
