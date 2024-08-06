@@ -28,8 +28,6 @@ const ChartMain: React.FC<ChartMainProps> = ({
   //}, [filterByTime, resources, startDate]);
   //console.log(isLoadingResources);
 
-  console.log(!resources.length && !isLoadingResources && <h2>Немає даних :(</h2>);
-
   return (
     <div className="chart-main">
       <RequestsFilter

@@ -1,7 +1,7 @@
 import React from "react";
 import { RequestsButton } from "./RequestsButton";
-import { RequestsButtonsGroup } from "./RequestsButtonsGroup";
 import { ReactComponent as DeleteIcon } from "../assets/icons/delete.svg";
+import { ReactComponent as DraggableIcon } from "../assets/icons/draggable.svg";
 import { ReactComponent as EditIcon } from "../assets/icons/edit.svg";
 import { getChangedRequestsFilter } from "../helpers/getChangedRequestsFilter";
 import { useFilterContext } from "../hooks/useFilterContext";
@@ -9,28 +9,25 @@ import { IFilterRequest } from "../types/IFilterRequest";
 
 interface CreateRequestItemProps {
   request: IFilterRequest;
+  dndProps: {
+    ref: any;
+    draggableProps: any;
+    draggableButtonProps: any;
+  };
 }
 
-const CreateRequestItem: React.FC<CreateRequestItemProps> = ({ request }) => {
+const CreateRequestItem: React.FC<CreateRequestItemProps> = ({ request, dndProps }) => {
   const { requestsFilter } = useFilterContext();
   const [isEditable, setIsEditable] = React.useState(false);
-  const [editedName, setEditedName] = React.useState("");
-  const [isActive, setIsActive] = React.useState(true);
-
-  React.useEffect(() => {
-    if (editedName !== "") {
-      const newRequestsFilter = getChangedRequestsFilter(requestsFilter, request.name, {
-        name: editedName,
-      });
-
-      requestsFilter.setFilter(newRequestsFilter);
-    }
-  }, [editedName, request.name, requestsFilter]);
 
   const onDelete = () => {
-    const newRequestsFilter = getChangedRequestsFilter(requestsFilter, request.name, {
-      deleted: true,
-    });
+    const newRequestsFilter = getChangedRequestsFilter(
+      requestsFilter.value,
+      request.name,
+      {
+        deleted: true,
+      }
+    );
 
     requestsFilter.setFilter(newRequestsFilter);
   };
@@ -39,47 +36,25 @@ const CreateRequestItem: React.FC<CreateRequestItemProps> = ({ request }) => {
     setIsEditable(!isEditable);
   };
 
-  const onToggleActive = () => {
-    setIsActive(!isActive);
-
-    const newRequestsFilter = getChangedRequestsFilter(requestsFilter, request.name, {
-      active: !isActive,
-    });
-
-    requestsFilter.setFilter(newRequestsFilter);
-  };
-
   return (
-    <div className="item-requests-filter">
-      <input
-        onChange={onToggleActive}
-        checked={request.active}
-        type="checkbox"
-        name="item-requests-filter-checkbox"
-      />
+    <div className="item-requests-filter" ref={dndProps.ref} {...dndProps.draggableProps}>
+      <div {...dndProps.draggableButtonProps} className="item-requests-filter-drag-icon">
+        <DraggableIcon />
+      </div>
       <button onClick={onDelete} className="item-requests-filter-button btn">
         <DeleteIcon />
       </button>
       <button onClick={onEdit} className="item-requests-filter-button btn">
         <EditIcon />
       </button>
-      {request.list ? (
-        <RequestsButtonsGroup
-          isEditable={isEditable}
-          setIsEditable={setIsEditable}
-          setEditedName={setEditedName}
-          request={request}
-          isEdit
-        />
-      ) : (
-        <RequestsButton
-          setEditedName={setEditedName}
-          isEditable={isEditable}
-          setIsEditable={setIsEditable}
-          request={request}
-          isEdit
-        />
-      )}
+
+      <RequestsButton
+        request={request}
+        isEditable={isEditable}
+        setIsEditable={setIsEditable}
+        isGroup={!!request.list?.length}
+        isEdit
+      />
     </div>
   );
 };

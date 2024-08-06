@@ -15,65 +15,108 @@ import { TimeFilterValues } from "./types/TimeFilterValues";
 //import { NewsChart } from "./components/NewsChart";
 //import { FilterProvider } from "./contexts/FilterContext";
 
-//const fakeRequestsFilter: IFilterRequest[] = [
-//  {
-//    name: "Request 1",
-//    active: true,
-//    deleted: false,
-//    disabled: false,
-//    list: [
-//      {
-//        name: "Sub Request 1",
-//        active: true,
-//        deleted: false,
-//      },
-//      {
-//        name: "Sub Request 2",
-//        active: false,
-//        deleted: true,
-//      },
-//    ],
-//  },
-//  {
-//    name: "Request 2",
-//    active: false,
-//    deleted: true,
-//    list: [
-//      {
-//        name: "Sub Request 3",
-//        active: true,
-//        deleted: false,
-//      },
-//    ],
-//  },
-//  {
-//    name: "Request 3",
-//    active: true,
-//    deleted: false,
-//    disabled: true,
-//  },
-//  {
-//    name: "Request 4",
-//    active: false,
-//    deleted: false,
-//  },
-//  {
-//    name: "Request 5",
-//    active: true,
-//    deleted: true,
-//  },
-//  {
-//    name: "Request 6",
-//    active: false,
-//    deleted: false,
-//    disabled: true,
-//  },
-//  {
-//    name: "Request 7",
-//    active: true,
-//    deleted: false,
-//  },
-//];
+const fakeRequestsFilter: IFilterRequest[] = [
+  {
+    name: "Group 1",
+    active: true,
+    deleted: false,
+    disabled: false,
+    list: [
+      {
+        name: "Sub Request 1",
+        active: true,
+        deleted: false,
+      },
+      {
+        name: "Sub Request 2",
+        active: true,
+        deleted: false,
+      },
+    ],
+  },
+  {
+    name: "Group 2",
+    active: true,
+    deleted: false,
+    list: [
+      {
+        name: "Sub Request 3",
+        active: true,
+        deleted: false,
+      },
+      {
+        name: "Sub Request 4",
+        active: true,
+        deleted: false,
+      },
+    ],
+  },
+  {
+    name: "Request 1",
+    active: true,
+    deleted: false,
+    disabled: false,
+  },
+  {
+    name: "Request 2",
+    active: true,
+    deleted: false,
+  },
+  {
+    name: "Request 3",
+    active: true,
+    deleted: false,
+  },
+  {
+    name: "Request 4",
+    active: true,
+    deleted: false,
+    disabled: false,
+  },
+  {
+    name: "Request 5",
+    active: true,
+    deleted: false,
+  },
+  {
+    name: "Request 6",
+    active: true,
+    deleted: false,
+  },
+  {
+    name: "Request 7",
+    active: true,
+    deleted: false,
+  },
+  {
+    name: "Request 8",
+    active: true,
+    deleted: false,
+  },
+  {
+    name: "Request 9",
+    active: true,
+    deleted: false,
+  },
+
+  {
+    name: "Group 3",
+    active: true,
+    deleted: false,
+    list: [
+      {
+        name: "Sub Request 5",
+        active: true,
+        deleted: false,
+      },
+      {
+        name: "Sub Request 6",
+        active: true,
+        deleted: false,
+      },
+    ],
+  },
+];
 
 function App() {
   const [resources, setResources] = React.useState<Resource[]>([]);
@@ -102,9 +145,11 @@ function App() {
       );
 
       setRequests(data.Requests);
-      setRequestsFilter(allRequestsFilter);
-      //setRequestsFilter(fakeRequestsFilter);
+      //setRequestsFilter(allRequestsFilter);
+      setRequestsFilter(fakeRequestsFilter);
     };
+
+    //setInterval(getData, 5000);
     getData();
 
     // * test fetch data

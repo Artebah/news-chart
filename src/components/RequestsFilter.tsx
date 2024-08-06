@@ -1,7 +1,6 @@
 import React from "react";
-import { CreateRequestItem } from "./CreateRequestItem";
+import { DndRequests } from "./DndRequests";
 import { RequestsButton } from "./RequestsButton";
-import { RequestsButtonsGroup } from "./RequestsButtonsGroup";
 import { ReactComponent as CloseIcon } from "../assets/icons/close.svg";
 import { ReactComponent as EditIcon } from "../assets/icons/edit.svg";
 import { useFilterContext } from "../hooks/useFilterContext";
@@ -28,13 +27,15 @@ const RequestsFilter: React.FC<RequestsFilterProps> = ({
     <>
       <div className="requests-filter-buttons ">
         {requestsFilter.value.length ? (
-          requestsFilter.value.map((request) =>
-            request.list ? (
-              <RequestsButtonsGroup key={request.name} request={request} />
-            ) : (
-              <RequestsButton key={request.name} request={request} />
-            )
-          )
+          requestsFilter.value
+            .slice(0, 8)
+            .map((request) => (
+              <RequestsButton
+                request={request}
+                isGroup={!!request.list?.length}
+                key={request.name}
+              />
+            ))
         ) : (
           <p>Немає фільтрів запитів :(</p>
         )}
@@ -55,9 +56,7 @@ const RequestsFilter: React.FC<RequestsFilterProps> = ({
         <CloseIcon />
       </button>
       <div className="requests-filter-list-block panel">
-        {requestsFilter.value.map((request) => (
-          <CreateRequestItem key={request.name} request={request} />
-        ))}
+        <DndRequests initialData={requestsFilter.value} />
       </div>
     </>
   );

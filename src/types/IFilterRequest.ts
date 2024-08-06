@@ -1,7 +1,10 @@
-export interface IFilterRequest {
+export interface IFilterRequestMain {
   name: string;
   active: boolean;
   deleted: boolean;
   disabled?: boolean;
-  list?: Omit<IFilterRequest, "list">[];
+}
+
+export interface IFilterRequest extends IFilterRequestMain {
+  list?: IFilterRequestMain[];
 }
