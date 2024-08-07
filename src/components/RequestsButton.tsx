@@ -57,17 +57,11 @@ const RequestsButton: React.FC<RequestsButtonProps> = ({
   const onToggleActive = () => {
     const newActive = !isActive;
 
-    const unactivedSubFilters = request.list?.map((subRequest) => ({
-      ...subRequest,
-      active: newActive,
-    }));
-
     const newRequestsFilter = getChangedRequestsFilter(
       requestsFilter.value,
       request.name,
       {
         active: newActive,
-        list: unactivedSubFilters,
       }
     );
 
@@ -87,13 +81,12 @@ const RequestsButton: React.FC<RequestsButtonProps> = ({
         _open: isOpen,
       })}>
       <button
-        onClick={!isGroup ? onToggleActive : undefined}
+        onClick={!isGroup && !isEditable ? onToggleActive : undefined}
         disabled={request.disabled}
         className={classNames("requests-filter-button", {
           _notActive: !request.active,
           btn: !isEdit,
           "group-requests-button": isGroup,
-          //_gruped: grouped,
         })}>
         {isGroup && (
           <span className="group-requests-button-icons" onClick={onOpenGroup}>

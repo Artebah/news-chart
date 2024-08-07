@@ -158,21 +158,33 @@ function App() {
 
   React.useEffect(() => {
     const filteredRequests = requests.filter((_, i) => {
-      return requestsFilter[i]?.active === true && requestsFilter[i]?.deleted === false;
+      return requestsFilter[i]?.active && !requestsFilter[i]?.deleted;
     });
 
     const newResources = getResources(filteredRequests);
 
     setResources(newResources);
 
-    if (requestsFilter.length) {
-      const newRequestsFilter = requestsFilter.filter(
-        (request) => request.deleted === false
+    const newRequestsFilter = requestsFilter
+      .filter((filter) => !filter.deleted)
+      .map((filter) => {
+        if (filter.list) {
+          return {
+            ...filter,
+            list: filter.list.filter((subFilter) => !subFilter.deleted),
+          };
+        }
+        return filter;
+      });
+
+    const needUpdate =
+      newRequestsFilter.length !== requestsFilter.length ||
+      !newRequestsFilter.every(
+        (filter, i) => JSON.stringify(filter) === JSON.stringify(requestsFilter[i])
       );
 
-      if (newRequestsFilter.length !== requestsFilter.length) {
-        setRequestsFilter(newRequestsFilter);
-      }
+    if (needUpdate) {
+      setRequestsFilter(newRequestsFilter);
     }
   }, [requestsFilter, requests]);
 

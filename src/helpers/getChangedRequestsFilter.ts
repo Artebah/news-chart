@@ -5,7 +5,7 @@ export function getChangedRequestsFilter(
   requestName: string,
   newProps: object
 ) {
-  const newRequests = requestsFilter.map((filter, i) => {
+  return requestsFilter.map((filter, i) => {
     if (filter.name === requestName) {
       return {
         ...filter,
@@ -13,55 +13,37 @@ export function getChangedRequestsFilter(
       };
     }
 
-    //  if (filter.list) {
-    //    const newSubRequests = filter.list.map((subFilter) => {
-    //      if (subFilter.name === requestName) {
-    //        return {
-    //          ...subFilter,
-    //          ...newProps,
-    //        };
-    //      }
-    //      return subFilter;
-    //    });
+    if (filter.list) {
+      const newSubRequests = filter.list.map((subFilter) => {
+        if (subFilter.name === requestName) {
+          return {
+            ...subFilter,
+            ...newProps,
+          };
+        }
 
-    //    const areAllSubFiltersInactive = newSubRequests.every(
-    //      (subFilter) => subFilter.active === false
-    //    );
+        return subFilter;
+      });
 
-    //    if (areAllSubFiltersInactive) {
-    //      return {
-    //        ...filter,
-    //        active: false,
-    //        list: newSubRequests,
-    //      };
-    //    } else {
-    //      return {
-    //        ...filter,
-    //        active: true,
-    //        list: newSubRequests,
-    //      };
-    //    }
-    //  }
+      const areAllSubFiltersInactive = newSubRequests.every(
+        (subFilter) => subFilter.active === false
+      );
+
+      if (areAllSubFiltersInactive) {
+        return {
+          ...filter,
+          active: false,
+          list: newSubRequests,
+        };
+      } else {
+        return {
+          ...filter,
+          active: true,
+          list: newSubRequests,
+        };
+      }
+    }
 
     return filter;
   });
-
-  return newRequests;
 }
-
-/* 
-
-    const newSubFilters = filter.list?.map((subFilter) => {
-      if (subFilter.name === requestName) {
-        return {
-          ...subFilter,
-          ...newProps,
-        };
-      }
-
-      return subFilter;
-    });
-
-    console.log(newSubFilters);
-
-*/
