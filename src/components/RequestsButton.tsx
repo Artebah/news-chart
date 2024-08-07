@@ -11,22 +11,18 @@ import { IFilterRequest } from "../types/IFilterRequest";
 
 interface RequestsButtonProps {
   request: IFilterRequest;
-  //grouped?: boolean;
   isGroup?: boolean;
   isEdit?: boolean;
   isEditable?: boolean;
   setIsEditable?: any;
-  //setEditedName?: any;
 }
 
 const RequestsButton: React.FC<RequestsButtonProps> = ({
   request,
-  //grouped,
   isGroup,
   isEdit,
   isEditable,
   setIsEditable,
-  //setEditedName,
 }) => {
   const { requestsFilter } = useFilterContext();
   const [isActive, setIsActive] = React.useState(true);

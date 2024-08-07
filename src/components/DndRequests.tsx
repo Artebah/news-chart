@@ -10,10 +10,12 @@ interface DndRequestsProps {
 const DndRequests: React.FC<DndRequestsProps> = ({ initialData }) => {
   const [data, setData] = React.useState<IFilterRequest[]>(initialData);
 
+  React.useEffect(() => {
+    setData(initialData);
+  }, [initialData]);
+
   const onDragEnd = (result: DropResult) => {
     const { source, destination, type } = result;
-
-    console.log(source, destination);
 
     if (!destination) return;
 
