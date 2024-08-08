@@ -8,6 +8,8 @@ import { useFilterContext } from "../hooks/useFilterContext";
 import { IFilterRequest } from "../types/IFilterRequest";
 
 interface CreateRequestItemProps {
+  isNewRequest?: boolean;
+  setIsNewRequest?: any;
   request: IFilterRequest;
   dndProps: {
     ref: any;
@@ -16,9 +18,23 @@ interface CreateRequestItemProps {
   };
 }
 
-const CreateRequestItem: React.FC<CreateRequestItemProps> = ({ request, dndProps }) => {
+const CreateRequestItem: React.FC<CreateRequestItemProps> = ({
+  request,
+  dndProps,
+  isNewRequest,
+  setIsNewRequest,
+}) => {
   const { requestsFilter } = useFilterContext();
   const [isEditable, setIsEditable] = React.useState(false);
+
+  React.useEffect(() => {
+    const lastFilterInList = requestsFilter.value[requestsFilter.value.length - 1];
+
+    if (isNewRequest && request.name === lastFilterInList.name) {
+      setIsEditable(true);
+      setIsNewRequest(false);
+    }
+  }, [isNewRequest, requestsFilter.value, request, setIsNewRequest]);
 
   const onDelete = () => {
     const newRequestsFilter = getChangedRequestsFilter(
@@ -52,7 +68,7 @@ const CreateRequestItem: React.FC<CreateRequestItemProps> = ({ request, dndProps
         request={request}
         isEditable={isEditable}
         setIsEditable={setIsEditable}
-        isGroup={!!request.list?.length}
+        isGroup={!!request.list}
         isEdit
       />
     </div>

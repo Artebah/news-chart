@@ -4,6 +4,7 @@ import { RequestsButton } from "./RequestsButton";
 import { ReactComponent as CloseIcon } from "../assets/icons/close.svg";
 import { ReactComponent as EditIcon } from "../assets/icons/edit.svg";
 import { useFilterContext } from "../hooks/useFilterContext";
+import { IFilterRequest, IFilterRequestMain } from "../types/IFilterRequest";
 
 interface RequestsFilterProps {
   openEditRequestsMenu: boolean;
@@ -15,12 +16,33 @@ const RequestsFilter: React.FC<RequestsFilterProps> = ({
   openEditRequestsMenu,
 }) => {
   const { requestsFilter } = useFilterContext();
+  const [isNewRequest, setIsNewRequest] = React.useState(false);
 
   const openEditMenuHandle = () => {
     setOpenEditRequestsMenu(true);
   };
   const closeEditMenuHandle = () => {
     setOpenEditRequestsMenu(false);
+  };
+
+  const addNewRequest = (isGroup: boolean) => {
+    const filtersLength = requestsFilter.value.length;
+    const filterName = isGroup ? "Нова група " : "Новий запит ";
+
+    const newRequest: IFilterRequest = {
+      name: filterName + filtersLength,
+      active: true,
+      deleted: false,
+      disabled: false,
+    };
+
+    if (isGroup) {
+      newRequest.list = [];
+    }
+
+    requestsFilter.setFilter([...requestsFilter.value, newRequest]);
+
+    setIsNewRequest(true);
   };
 
   const defaultLayout = (
@@ -49,14 +71,26 @@ const RequestsFilter: React.FC<RequestsFilterProps> = ({
   const editLayout = (
     <>
       <div className="requests-filter-buttons">
-        <button className="requests-filter-edit-button btn">Створити новий запит</button>
-        <button className="requests-filter-edit-button btn">Створити нову групу</button>
+        <button
+          onClick={() => addNewRequest(false)}
+          className="requests-filter-edit-button btn">
+          Створити новий запит
+        </button>
+        <button
+          onClick={() => addNewRequest(true)}
+          className="requests-filter-edit-button btn">
+          Створити нову групу
+        </button>
       </div>
       <button onClick={closeEditMenuHandle} className="requests-filter-edit">
         <CloseIcon />
       </button>
       <div className="requests-filter-list-block panel">
-        <DndRequests initialData={requestsFilter.value} />
+        <DndRequests
+          setIsNewRequest={setIsNewRequest}
+          isNewRequest={isNewRequest}
+          initialData={requestsFilter.value}
+        />
       </div>
     </>
   );

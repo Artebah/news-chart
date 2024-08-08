@@ -7,7 +7,7 @@ import { ReactComponent as FolderOpenSvg } from "../assets/icons/group-open.svg"
 import { ReactComponent as FolderSvg } from "../assets/icons/group.svg";
 import { getChangedRequestsFilter } from "../helpers/getChangedRequestsFilter";
 import { useFilterContext } from "../hooks/useFilterContext";
-import { IFilterRequest } from "../types/IFilterRequest";
+import { IFilterRequest, IFilterRequestMain } from "../types/IFilterRequest";
 
 interface RequestsButtonProps {
   request: IFilterRequest;
@@ -15,6 +15,8 @@ interface RequestsButtonProps {
   isEdit?: boolean;
   isEditable?: boolean;
   setIsEditable?: any;
+  isNewRequest?: boolean;
+  setIsNewRequest?: any;
 }
 
 const RequestsButton: React.FC<RequestsButtonProps> = ({
@@ -23,6 +25,8 @@ const RequestsButton: React.FC<RequestsButtonProps> = ({
   isEdit,
   isEditable,
   setIsEditable,
+  isNewRequest,
+  setIsNewRequest,
 }) => {
   const { requestsFilter } = useFilterContext();
   const [isActive, setIsActive] = React.useState(true);
@@ -73,6 +77,31 @@ const RequestsButton: React.FC<RequestsButtonProps> = ({
     setIsOpen(!isOpen);
   };
 
+  const addNewSubRequest = () => {
+    if (request.list) {
+      const requestListLength = request.list.length;
+
+      const newSubRequest: IFilterRequestMain = {
+        name: request.name + " новий під-запит " + requestListLength,
+        active: true,
+        deleted: false,
+        disabled: false,
+      };
+
+      const updatedRequestsFilter = requestsFilter.value.map((filterRequest) => {
+        if (filterRequest.name === request.name && filterRequest.list) {
+          return {
+            ...filterRequest,
+            list: [...filterRequest.list, newSubRequest],
+          };
+        }
+        return filterRequest;
+      });
+
+      requestsFilter.setFilter(updatedRequestsFilter);
+    }
+  };
+
   return (
     <div
       className={classNames("requests-filter", {
@@ -98,6 +127,7 @@ const RequestsButton: React.FC<RequestsButtonProps> = ({
         )}
         {isEditable ? (
           <input
+            autoFocus={isEdit}
             className="requests-filter-input"
             onBlur={onBlur}
             defaultValue={request.name}
@@ -113,7 +143,9 @@ const RequestsButton: React.FC<RequestsButtonProps> = ({
       {isGroup && (
         <div className="group-requests-nested-buttons">
           {isEdit && (
-            <button className="group-requests-nested-buttons-add btn">
+            <button
+              onClick={addNewSubRequest}
+              className="group-requests-nested-buttons-add btn">
               Додати запит
             </button>
           )}

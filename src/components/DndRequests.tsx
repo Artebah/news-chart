@@ -5,14 +5,36 @@ import { IFilterRequest } from "../types/IFilterRequest";
 
 interface DndRequestsProps {
   initialData: any;
+  isNewRequest: boolean;
+  setIsNewRequest: any;
 }
 
-const DndRequests: React.FC<DndRequestsProps> = ({ initialData }) => {
+const DndRequests: React.FC<DndRequestsProps> = ({
+  initialData,
+  isNewRequest,
+  setIsNewRequest,
+}) => {
   const [data, setData] = React.useState<IFilterRequest[]>(initialData);
 
   React.useEffect(() => {
     setData(initialData);
   }, [initialData]);
+
+  React.useEffect(() => {
+    if (isNewRequest) {
+      const dndWrapper = document.querySelector(
+        "[data-rbd-droppable-id='root-dnd-droppable-zone']"
+      );
+
+      if (dndWrapper) {
+        setTimeout(() => {
+          dndWrapper.scrollBy({
+            top: dndWrapper.scrollHeight,
+          });
+        }, 0);
+      }
+    }
+  }, [isNewRequest]);
 
   const onDragEnd = (result: DropResult) => {
     const { source, destination, type } = result;
@@ -86,6 +108,8 @@ const DndRequests: React.FC<DndRequestsProps> = ({ initialData }) => {
                         ref={providedDroppable.innerRef}>
                         {/* filter or group */}
                         <CreateRequestItem
+                          setIsNewRequest={setIsNewRequest}
+                          isNewRequest={isNewRequest}
                           request={item}
                           dndProps={{
                             ref: providedDraggable.innerRef,
