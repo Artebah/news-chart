@@ -48,7 +48,7 @@ const RequestsFilter: React.FC<RequestsFilterProps> = ({
 
   const editLayout = (
     <>
-      <div className="requests-filter-buttons ">
+      <div className="requests-filter-buttons">
         <button className="requests-filter-edit-button btn">Створити новий запит</button>
         <button className="requests-filter-edit-button btn">Створити нову групу</button>
       </div>
