@@ -1,24 +1,15 @@
 import React from "react";
 import { DragDropContext, Draggable, Droppable, DropResult } from "react-beautiful-dnd";
 import { CreateRequestItem } from "./CreateRequestItem";
-import { IFilterRequest } from "../types/IFilterRequest";
+import { useFilterContext } from "../hooks/useFilterContext";
 
 interface DndRequestsProps {
-  initialData: any;
   isNewRequest: boolean;
   setIsNewRequest: any;
 }
 
-const DndRequests: React.FC<DndRequestsProps> = ({
-  initialData,
-  isNewRequest,
-  setIsNewRequest,
-}) => {
-  const [data, setData] = React.useState<IFilterRequest[]>(initialData);
-
-  React.useEffect(() => {
-    setData(initialData);
-  }, [initialData]);
+const DndRequests: React.FC<DndRequestsProps> = ({ isNewRequest, setIsNewRequest }) => {
+  const { requestsFilter } = useFilterContext();
 
   React.useEffect(() => {
     if (isNewRequest) {
@@ -48,7 +39,7 @@ const DndRequests: React.FC<DndRequestsProps> = ({
       return;
 
     if (type === "group") {
-      const reorderedStores = [...data];
+      const reorderedStores = [...requestsFilter.value];
 
       const sourceIndex = source.index;
       const destinatonIndex = destination.index;
@@ -56,38 +47,40 @@ const DndRequests: React.FC<DndRequestsProps> = ({
       const [removedStore] = reorderedStores.splice(sourceIndex, 1);
       reorderedStores.splice(destinatonIndex, 0, removedStore);
 
-      return setData(reorderedStores);
+      return requestsFilter.setFilter(reorderedStores);
     }
 
     const sourceIndex = source.index;
     const destinationIndex = destination.index;
 
-    const itemSourceIndex = data.findIndex((item) => item.name === source.droppableId);
-    const itemDestinationIndex = data.findIndex(
+    const itemSourceIndex = requestsFilter.value.findIndex(
+      (item) => item.name === source.droppableId
+    );
+    const itemDestinationIndex = requestsFilter.value.findIndex(
       (item) => item.name === destination.droppableId
     );
 
-    const newSourceItems = [...(data[itemSourceIndex].list ?? [])];
+    const newSourceItems = [...(requestsFilter.value[itemSourceIndex].list ?? [])];
     const newDestinationItems =
       source.droppableId !== destination.droppableId
-        ? [...(data[itemDestinationIndex].list ?? [])]
+        ? [...(requestsFilter.value[itemDestinationIndex].list ?? [])]
         : newSourceItems;
 
     const [deletedItem] = newSourceItems.splice(sourceIndex, 1);
     newDestinationItems.splice(destinationIndex, 0, deletedItem);
 
-    const newData = [...data];
+    const newData = [...requestsFilter.value];
 
     newData[itemSourceIndex] = {
-      ...data[itemSourceIndex],
+      ...requestsFilter.value[itemSourceIndex],
       list: newSourceItems,
     };
     newData[itemDestinationIndex] = {
-      ...data[itemDestinationIndex],
+      ...requestsFilter.value[itemDestinationIndex],
       list: newDestinationItems,
     };
 
-    setData(newData);
+    requestsFilter.setFilter(newData);
   };
 
   return (
@@ -96,7 +89,7 @@ const DndRequests: React.FC<DndRequestsProps> = ({
       <Droppable droppableId="root-dnd-droppable-zone" type="group">
         {(providedDroppable) => (
           <div {...providedDroppable.droppableProps} ref={providedDroppable.innerRef}>
-            {data.map((item, index) => (
+            {requestsFilter.value.map((item, index) => (
               /* top-level filters and groups */
               <Draggable key={item.name} draggableId={item.name} index={index}>
                 {(providedDraggable) => (

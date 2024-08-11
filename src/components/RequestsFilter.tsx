@@ -86,11 +86,7 @@ const RequestsFilter: React.FC<RequestsFilterProps> = ({
         <CloseIcon />
       </button>
       <div className="requests-filter-list-block panel">
-        <DndRequests
-          setIsNewRequest={setIsNewRequest}
-          isNewRequest={isNewRequest}
-          initialData={requestsFilter.value}
-        />
+        <DndRequests setIsNewRequest={setIsNewRequest} isNewRequest={isNewRequest} />
       </div>
     </>
   );

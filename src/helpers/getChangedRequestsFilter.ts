@@ -7,10 +7,17 @@ export function getChangedRequestsFilter(
 ) {
   return requestsFilter.map((filter, i) => {
     if (filter.name === requestName) {
-      return {
+      const newFilter = {
         ...filter,
         ...newProps,
       };
+
+      newFilter.list = newFilter.list?.map((subFilter) => ({
+        ...subFilter,
+        active: newFilter.active,
+      }));
+
+      return newFilter;
     }
 
     if (filter.list) {
@@ -29,21 +36,12 @@ export function getChangedRequestsFilter(
         (subFilter) => subFilter.active === false
       );
 
-      if (areAllSubFiltersInactive) {
-        return {
-          ...filter,
-          active: false,
-          list: newSubRequests,
-        };
-      } else {
-        return {
-          ...filter,
-          active: true,
-          list: newSubRequests,
-        };
-      }
+      return {
+        ...filter,
+        active: areAllSubFiltersInactive ? false : true,
+        list: newSubRequests,
+      };
     }
-
     return filter;
   });
 }
