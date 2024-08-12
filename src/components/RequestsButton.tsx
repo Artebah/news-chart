@@ -104,7 +104,7 @@ const RequestsButton: React.FC<RequestsButtonProps> = ({
 
   return (
     <div
-      className={classNames("requests-filter", {
+      className={classNames("requests-filter-el", {
         "group-requests": isGroup,
         _edit: isEdit,
         _open: isOpen,
