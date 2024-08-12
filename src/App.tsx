@@ -1,6 +1,5 @@
 import React from "react";
 import { ChartMain } from "./components/ChartMain";
-import { Sidebar } from "./components/Sidebar";
 import { START_DATE } from "./constants";
 import { DateProvider } from "./contexts/DateContext";
 import { FilterProvider } from "./contexts/FilterContext";
@@ -210,7 +209,6 @@ function App() {
             }}>
             <h1>WorldNews</h1>
             <div className="layout">
-              <Sidebar />
               <main className="main">
                 <ChartMain
                   isLoadingResources={isLoadingResources}
