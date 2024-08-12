@@ -1,4 +1,5 @@
 import React from "react";
+import { ColoredLine } from "./ColoredLine";
 import { Highchart } from "./Highchart";
 import { RequestsFilter } from "./RequestsFilter";
 import { TimeAccuracy } from "./TimeAccuracy";
@@ -28,6 +29,12 @@ const ChartMain: React.FC<ChartMainProps> = ({
   //}, [filterByTime, resources, startDate]);
   //console.log(isLoadingResources);
 
+  const groupedData = generateData(
+    resources,
+    filterByTime,
+    formatDate(startDate, "full")
+  );
+
   return (
     <div className="chart-main">
       <RequestsFilter
@@ -39,16 +46,11 @@ const ChartMain: React.FC<ChartMainProps> = ({
       {!resources.length && !isLoadingResources && <h2>Немає даних :(</h2>}
 
       {resources.length && !openEditRequestsMenu && !isLoadingResources ? (
-        <Highchart
-          groupedData={generateData(
-            resources,
-            filterByTime,
-            formatDate(startDate, "full")
-          )}
-        />
+        <Highchart groupedData={groupedData} />
       ) : (
         <></>
       )}
+      <ColoredLine data={groupedData} />
     </div>
   );
 };

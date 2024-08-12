@@ -384,3 +384,29 @@ iframe {
     }
   }
 }
+
+.colored-line {
+  margin-top: 40px;
+  display: flex;
+  width: 100%;
+
+  &-item {
+    &:first-child {
+      .colored-line-item-line {
+        border-radius: 5px 0 0 5px;
+      }
+    }
+    &:last-child {
+      .colored-line-item-line {
+        border-radius: 0 5px 5px 0;
+      }
+    }
+
+    &-line {
+      height: 10px;
+    }
+    &-count {
+      text-align: center;
+    }
+  }
+}

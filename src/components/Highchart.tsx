@@ -1,11 +1,7 @@
 import HighchartsReact, { HighchartsReactRefObject } from "highcharts-react-official";
 import Highcharts from "highcharts/highstock";
 import React from "react";
-import FacebookIcon from "../assets/icons/facebook.svg";
-import TelegramIcon from "../assets/icons/telegram.svg";
-import TiktokIcon from "../assets/icons/tiktok.svg";
-import ViberIcon from "../assets/icons/viber.svg";
-import YoutubeIcon from "../assets/icons/youtube.svg";
+import { SOCIALS_STYLE } from "../constants/socials-style";
 import { GeneratedData } from "../types/GeneratedData";
 
 interface HighchartProps {
@@ -14,16 +10,6 @@ interface HighchartProps {
 
 const Highchart: React.FC<HighchartProps> = ({ groupedData }) => {
   const chartRef = React.useRef<HighchartsReactRefObject>(null);
-
-  type StyleMapping = { name: string; icon: string; lineColor: string }[];
-
-  const styleMapping: StyleMapping = [
-    { name: "Youtube", icon: YoutubeIcon, lineColor: "#E30613" },
-    { name: "Telegram", icon: TelegramIcon, lineColor: "#00CCE8" },
-    { name: "Viber", icon: ViberIcon, lineColor: "#C944EE" },
-    { name: "Tiktok", icon: TiktokIcon, lineColor: "#EE4484" },
-    { name: "Facebook", icon: FacebookIcon, lineColor: "#0866FF" },
-  ];
 
   const options: Highcharts.Options = {
     accessibility: {
@@ -79,7 +65,7 @@ const Highchart: React.FC<HighchartProps> = ({ groupedData }) => {
 
       buttons: [],
     },
-    series: styleMapping.map((style, i) => ({
+    series: SOCIALS_STYLE.map((style, i) => ({
       data: groupedData[i],
       name: style.name,
       color: style.lineColor,
@@ -95,7 +81,7 @@ const Highchart: React.FC<HighchartProps> = ({ groupedData }) => {
 
         if (!groupedData[id].length) return ``;
 
-        const { lineColor, icon } = styleMapping[id];
+        const { lineColor, icon } = SOCIALS_STYLE[id];
 
         return `
           <div class="highchart-legend-item">
