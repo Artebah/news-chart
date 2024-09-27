@@ -1,79 +1,20 @@
-# Логіка підрахунку постів
+# News chart
+News Chart is a data visualization project designed to analyze and display the frequency of news posts over time. 
+## The project is built using:
+* chart.js
+* classnames
+* highcharts
+* highcharts-react-official
+* react-beautiful-dnd
+* react-chartjs-2
+* sass
+## Features
+**Post Frequency Calculation:** Efficiently counts and analyzes the number of news posts within specified time frames.
 
-````javascript
-let initDates = [];
-let currentDate = startDate;
-let i = binaryFoundIndex;
+**Interactive Charts:** Visualizes data with interactive charts that allow users to explore trends over time.
 
-**Підрахунок існуючої властивості**
-if (timestamp in initDates) {
-    initDates[timestamp] = initDates[timestamp] + 1;
-    i++;
-} else {
-    **Перевірка поточної дати, яка повинна бути. Починаючи з currentDate = startDate**
-    if (timestamp === currentDate) {
-        initDates[timestamp] = 1;
-        currentDate += 1000;
-        i++;
-    } else {
-        **Додати 0 count**
-        initDates[currentDate] = 0;
-        currentDate += 1000;
-    }
-}
+**Customizable Filters:** Provides various filters to adjust the time range and accuracy for the displayed data.
 
-currentDate = 20.07.2024 10:04:07
-timestamp = 20.07.2024 10:04:07
-
-## Input timestamps
-20.07.2024 10:04:00
-20.07.2024 10:04:01
-...
-20.07.2024 10:04:03
-20.07.2024 10:04:03
-20.07.2024 10:04:04
-20.07.2024 10:04:05
-20.07.2024 10:04:05
-20.07.2024 10:04:05
-20.07.2024 10:04:06
-
-## Output data
-{
-    "20.07.2024 10:04:00": 1,
-    "20.07.2024 10:04:01": 1,
-    "20.07.2024 10:04:02": 0,
-    "20.07.2024 10:04:03": 2,
-    "20.07.2024 10:04:04": 1,
-    "20.07.2024 10:04:05": 3,
-    "20.07.2024 10:04:06": 1
-}
-
-
-
-```layout
-container
-    title (with margin-left)
-    Layout
-        Sidebar
-        Main
-            RequestsFilter
-            TimeFilters
-                TimeAccuracy
-                TimeRange
-            Chart
-            Lines
-````
-
-```Requests-filter-add layout
-    requests-panel
-        isCreateRequests ?
-        (DefaultLayout) : (CreateLayout)
-
-        CreateLayout
-            panel with 2 buttons
-            requests-list block
-                CreateRequestItem
-                    it is a wrapper with delete button
-                    and you can change names of group or request
-                        using contenteditable
-```
+**Scroll Chart:** Allows users to scroll through the chart to view data over extended time periods.
+## How to launch
+Go to the link: https://news-chart.vercel.app/
